@@ -1,0 +1,38 @@
+# This is the name of our robot
+name: Daily Commit Bot
+
+# This is the robot's alarm clock
+on:
+  # This sets the alarm to go off at 5:30 AM every day
+  schedule:
+    - cron: '30 5 * * *'
+  # [cite_start]This adds a manual "Run" button so we can test it [cite: 373]
+  workflow_dispatch:
+
+# This is the list of jobs the robot has to do
+jobs:
+  daily-commit-job:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      # Step 1: The robot gets its tools and checks out the project code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: The robot makes a change and includes your email in the name
+      - name: Update a file with my email 23f3004196@ds.study.iitm.ac.in
+        run: |
+          # We'll update a file called "last-run.txt" with the current time
+          date >> last-run.txt
+
+      # Step 3: The robot saves (commits) its work
+      - name: Commit and push changes
+        run: |
+          [cite_start]git config --local user.email "github-actions[bot]@users.noreply.github.com" [cite: 375]
+          [cite_start]git config --local user.name "github-actions[bot]" [cite: 375]
+          git add -A
+          # We add a commit message with the date
+          [cite_start]git commit -m "Automated commit from GitHub Actions on $(date)" || exit 0 [cite: 376]
+          [cite_start]git push [cite: 376]
