@@ -24,15 +24,14 @@ jobs:
       # Step 2: The robot makes a change and includes your email in the name
       - name: Update a file with my email 23f3004196@ds.study.iitm.ac.in
         run: |
-          # We'll update a file called "last-run.txt" with the current time
           date >> last-run.txt
 
-      # Step 3: The robot saves (commits) its work
+      # Step 3: The robot saves (commits) its work - THIS IS THE FINAL FIX!
       - name: Commit and push changes
         run: |
-          [cite_start]git config --local user.email "github-actions[bot]@users.noreply.github.com" [cite: 375]
-          [cite_start]git config --local user.name "github-actions[bot]" [cite: 375]
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           git add -A
-          # We add a commit message with the date
-          [cite_start]git commit -m "Automated commit from GitHub Actions on $(date)" || exit 0 [cite: 376]
-          [cite_start]git push [cite: 376]
+          git commit -m "Automated commit from GitHub Actions on $(date)" || exit 0
+          git pull
+          git push
